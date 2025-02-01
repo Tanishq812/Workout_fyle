@@ -1,0 +1,10 @@
+<div class="container mx-auto p-4">  <div class="mb-4 p-4 border border-gray-300 rounded">  <input type="text" [(ngModel)]="newUserName" placeholder="User Name" class="border border-gray-300 rounded px-2 py-1 mr-2">
+
+  <select [(ngModel)]="newWorkoutType" class="border border-gray-300 rounded px-2 py-1 mr-2">
+    <option *ngFor="let type of workoutTypes" [value]="type">{{ type }}</option>
+  </select>
+
+  <input type="number" [(ngModel)]="newWorkoutMinutes" placeholder="Minutes" class="border border-gray-300 rounded px-2 py-1 mr-2">
+  <button (click)="addWorkout()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Workout</button>
+</div>
+</div>
