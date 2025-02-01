@@ -52,11 +52,7 @@ describe('WorkoutService', () => {
     expect(addedUser?.id).toBeGreaterThan(0);
   });
 
-  /* it('should calculate total minutes', () => {
-    const user: User = { id: 1, name: 'Test', workouts: [{ type: 'Running', minutes: 30 }, { type: 'Swimming', minutes: 45 }] };
-    const totalMinutes = service.calculateTotalMinutes(user);
-    expect(totalMinutes).toBe(75);
-  }); */
+
 
   it('should initialize data if local storage is empty', () => {
     localStorage.clear();
@@ -75,17 +71,5 @@ describe('WorkoutService', () => {
     expect(users).toEqual(mockUsers);
   });
 
-  /* it('should update users$ observable', () => {
-    const mockUser: User = { id: 1, name: 'Test User', workouts: [] };
-    const initialUsers: User[] = [];
-    localStorage.setItem('workoutData', JSON.stringify(initialUsers));
 
-    let emittedUsers: User[] | null = null;
-    service.users$.subscribe(users => {
-      emittedUsers = users;
-    });
-
-    service.addUser(mockUser);
-    expect(emittedUsers).toEqual([mockUser]);
-  }); */
 });

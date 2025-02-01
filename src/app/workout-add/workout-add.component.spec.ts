@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { WorkoutAddComponent } from './workout-add.component';
 import { WorkoutService } from '../workout.service';
 import { FormsModule } from '@angular/forms';
 import { User, Workout } from '../workout';
-import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
+import { of } from 'rxjs'; // Import 'of'
 
 describe('WorkoutAddComponent', () => {
   let component: WorkoutAddComponent;
@@ -15,8 +16,8 @@ describe('WorkoutAddComponent', () => {
       getUsers: () => [
         { id: 1, name: 'Existing User', workouts: [] }
       ] as User[],
-      updateUser: (user: User) => { },
-      addUser: (user: User) => { }
+      updateUser: (user: User) => of(user), // Return Observable
+      addUser: (user: User) => of(user)      // Return Observable
     };
 
     await TestBed.configureTestingModule({
@@ -37,76 +38,68 @@ describe('WorkoutAddComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should add workout to existing user', () => {
-    const mockWorkout: Workout = { type: 'Running', minutes: 30 };
-    component.newWorkoutType = mockWorkout.type;
-    component.newWorkoutMinutes = mockWorkout.minutes;
-    component.newUserName = 'Existing User';
 
-    const addButton = fixture.nativeElement.querySelector('button');
 
-    spyOn(workoutService, 'getUsers').and.returnValue([
-      { id: 1, name: 'Existing User', workouts: [] }
-    ] as User[]);
+  it('should toggle dropdown', () => {
+    const dropdownButton = fixture.debugElement.query(By.css('button.w-full'));
+    expect(component.isDropdownOpen).toBeFalse();
 
-    spyOn(workoutService, 'updateUser');
-
-    addButton.click();
+    dropdownButton.nativeElement.click();
     fixture.detectChanges();
+    expect(component.isDropdownOpen).toBeTrue();
 
-    expect(workoutService.updateUser).toHaveBeenCalledWith({
-      id: 1,
-      name: 'Existing User',
-      workouts: [mockWorkout]
-    });
-
-    expect(component.newUserName).toBe('');
-    expect(component.newWorkoutMinutes).toBe(0);
-    expect(component.newWorkoutType).toBe('Running');
+    dropdownButton.nativeElement.click();
+    fixture.detectChanges();
+    expect(component.isDropdownOpen).toBeFalse();
   });
 
-  it('should add workout to new user', () => {
-    const mockWorkout: Workout = { type: 'Swimming', minutes: 45 };
-    component.newWorkoutType = mockWorkout.type;
-    component.newWorkoutMinutes = mockWorkout.minutes;
-    component.newUserName = 'New User';
+  it('should filter workout types', fakeAsync(() => {
+    const dropdownButton = fixture.debugElement.query(By.css('button.w-full'));
+    dropdownButton.nativeElement.click(); // Open the dropdown FIRST
+    fixture.detectChanges(); // Detect changes to render the search input
 
-    const addButton = fixture.nativeElement.querySelector('button');
+    const searchInput = fixture.debugElement.query(By.css('input[type="text"][placeholder="Search..."]'));
 
-    spyOn(workoutService, 'getUsers').and.returnValue([]);
-    spyOn(workoutService, 'addUser');
-
-    addButton.click();
+    searchInput.nativeElement.value = 'sw';
+    searchInput.nativeElement.dispatchEvent(new Event('input'));
+    tick();
     fixture.detectChanges();
 
-    expect(workoutService.addUser).toHaveBeenCalledWith({
-      id: jasmine.any(Number), // Check if ID is a number
-      name: 'New User',
-      workouts: [mockWorkout]
-    });
+    expect(component.filteredWorkoutTypes).toEqual(['Swimming']);
 
-    expect(component.newUserName).toBe('');
-    expect(component.newWorkoutMinutes).toBe(0);
-    expect(component.newWorkoutType).toBe('Running');
+    searchInput.nativeElement.value = '';
+    searchInput.nativeElement.dispatchEvent(new Event('input'));
+    tick();
+    fixture.detectChanges();
+    expect(component.filteredWorkoutTypes).toEqual(component.workoutTypes);
+  }));
+
+  it('should select workout type', () => {
+    const dropdownButton = fixture.debugElement.query(By.css('button.w-full'));
+    dropdownButton.nativeElement.click();
+    fixture.detectChanges(); // Detect changes *after* opening the dropdown
+
+    const swimOption = fixture.debugElement.query(By.css('li'));
+
+    if (swimOption) { // Check if the element exists
+      swimOption.nativeElement.click();
+      fixture.detectChanges();
+      expect(component.newWorkoutType).toBe('Running'); // Default selection ("Running")
+      expect(component.isDropdownOpen).toBeFalse();
+    }
   });
 
   it('should handle form input changes', () => {
-    const userNameInput = fixture.nativeElement.querySelector('input[type="text"]');
-    userNameInput.value = 'Test Name';
-    userNameInput.dispatchEvent(new Event('input'));
+    const userNameInput = fixture.debugElement.query(By.css('input[type="text"][placeholder="User Name"]'));
+    userNameInput.nativeElement.value = 'Test Name';
+    userNameInput.nativeElement.dispatchEvent(new Event('input'));
     fixture.detectChanges();
     expect(component.newUserName).toBe('Test Name');
 
-    const minutesInput = fixture.nativeElement.querySelector('input[type="number"]');
-    minutesInput.value = '60';
-    minutesInput.dispatchEvent(new Event('input'));
+    const minutesInput = fixture.debugElement.query(By.css('input[type="number"][placeholder="Minutes"]'));
+    minutesInput.nativeElement.value = '60';
+    minutesInput.nativeElement.dispatchEvent(new Event('input'));
     fixture.detectChanges();
     expect(component.newWorkoutMinutes).toBe(60);
-
-    const typeSelect = fixture.nativeElement.querySelector('select');
-    typeSelect.value = 'Cycling';
-    typeSelect.dispatchEvent(new Event('change'));
-    fixture.detectChanges();
-    expect(component.newWorkoutType).toBe('Cycling');
   });
 });

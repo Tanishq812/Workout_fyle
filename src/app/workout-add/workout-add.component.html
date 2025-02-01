@@ -1,10 +1,45 @@
-<div class="container mx-auto p-4">  <div class="mb-4 p-4 border border-gray-300 rounded">  <input type="text" [(ngModel)]="newUserName" placeholder="User Name" class="border border-gray-300 rounded px-2 py-1 mr-2">
+<div class="flex justify-center items-center  p-6">
+  <div class="bg-white bg-opacity-30 p-6 rounded-lg shadow-md w-100 text-center">
+    <h2 class="text-xl font-semibold text-black mb-4">Add Workout</h2>
 
-  <select [(ngModel)]="newWorkoutType" class="border border-gray-300 rounded px-2 py-1 mr-2">
-    <option *ngFor="let type of workoutTypes" [value]="type">{{ type }}</option>
-  </select>
+    <input
+      type="text"
+      [(ngModel)]="newUserName"
+      placeholder="User Name"
+      class="w-full p-2 mb-3 bg-white bg-opacity-70 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
 
-  <input type="number" [(ngModel)]="newWorkoutMinutes" placeholder="Minutes" class="border border-gray-300 rounded px-2 py-1 mr-2">
-  <button (click)="addWorkout()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Workout</button>
-</div>
+    <div class="relative mb-3">
+      <button
+        class="w-full p-2 bg-white bg-opacity-70 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex justify-between items-center"
+        (click)="toggleDropdown()">
+        {{ newWorkoutType }}
+        <span class="text-lg">&#9660;</span>
+      </button>
+      <div *ngIf="isDropdownOpen" class="absolute w-full bg-white bg-opacity-90 border border-gray-300 rounded-md mt-1 z-10 max-h-40 overflow-auto">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="filterWorkoutTypes()"
+          placeholder="Search..."
+          class="w-full p-2 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        <ul>
+          <li *ngFor="let type of filteredWorkoutTypes" (click)="selectOption(type)" class="p-2 cursor-pointer hover:bg-indigo-500 hover:text-white">
+            {{ type }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <input
+      type="number"
+      [(ngModel)]="newWorkoutMinutes"
+      placeholder="Minutes"
+      class="w-full p-2 mb-3 bg-white bg-opacity-70 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+    <button
+      (click)="addWorkout()"
+      class="w-full py-2 bg-gradient-to-r from-pink-500 to-indigo-600 text-white rounded-md hover:bg-gradient-to-l">
+      Add Workout
+    </button>
+  </div>
 </div>

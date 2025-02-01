@@ -11,10 +11,30 @@ export class WorkoutAddComponent {
   newUserName: string = '';
   newWorkoutType: string = 'Running'; // Default workout type
   newWorkoutMinutes: number = 0;
-  workoutTypes: string[] = ['Running', 'Cycling', 'Swimming', 'Yoga'];
+  workoutTypes: string[] = ['Running', 'Cycling', 'Swimming', 'Yoga', 'Jumping', 'Hiking'];
+  filteredWorkoutTypes: string[] = [...this.workoutTypes];
+  isDropdownOpen: boolean = false; // Track dropdown state
+  searchTerm: string = ''; // Search term for filtering
 
   constructor(private workoutService: WorkoutService) { }
 
+  // Toggle dropdown visibility
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Filter workout types based on search input
+  filterWorkoutTypes() {
+    this.filteredWorkoutTypes = this.workoutTypes.filter(type => type.toLowerCase().includes(this.searchTerm.toLowerCase()));
+  }
+
+  // Select workout type from the dropdown
+  selectOption(type: string) {
+    this.newWorkoutType = type;
+    this.isDropdownOpen = false; // Close dropdown after selection
+  }
+
+  // Add a new workout
   addWorkout() {
     const newWorkout: Workout = {
       type: this.newWorkoutType,
