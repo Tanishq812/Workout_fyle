@@ -11,7 +11,7 @@ export class WorkoutAddComponent {
   newUserName: string = '';
   newWorkoutType: string = 'Running'; // Default workout type
   newWorkoutMinutes: number = 0;
-  workoutTypes: string[] = ['Running', 'Cycling', 'Swimming', 'Yoga', 'Jumping', 'Hiking'];
+  workoutTypes: string[] = ['Running', 'Cycling', 'Swimming', 'Yoga'];
   filteredWorkoutTypes: string[] = [...this.workoutTypes];
   isDropdownOpen: boolean = false; // Track dropdown state
   searchTerm: string = ''; // Search term for filtering

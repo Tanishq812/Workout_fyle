@@ -1,27 +1,66 @@
-# WorkoutTracker
+# Health Challenge Tracker
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
+This is a web application built with Angular for tracking workouts in health challenges. The application allows users to add workouts, filter users by name and workout type, and view detailed workout progress for each user.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Add new workouts for users
+- Filter users by name and workout type
+- Display user workout details in a paginated table
+- View detailed workout progress in a bar chart
+- Responsive design using Tailwind CSS
+- Click on the user th get the Bar chart
 
-## Code scaffolding
+## Technologies Used
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular
+- Tailwind CSS
+- ngx-charts
+- ngx-pagination
 
-## Build
+## Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Prerequisites
 
-## Running unit tests
+- Node.js (version 14 or later)
+- npm (version 6 or later)
+- Angular CLI (version 11 or later)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Installation
 
-## Running end-to-end tests
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/Tanishq812/Workout_fyle
+    cd Workout-App
+    ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. Install the dependencies:
+    ```bash
+    npm install
+    ```
 
-## Further help
+### Running the Application
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Start the development server:
+    ```bash
+    ng serve
+    ```
+
+2. Open your browser and navigate to `http://localhost:4200`.
+
+### Running Tests
+
+1. Run the tests:
+    ```bash
+    ng test
+    ```
+
+2. Generate test coverage reports:
+    ```bash
+    ng test --code-coverage
+    ```
+
+3. View the coverage report:
+    After running the above command, open the `coverage` directory in the project root and open the `index.html` file in a web browser to view the test coverage report.
+
+
