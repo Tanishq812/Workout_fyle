@@ -1,44 +1,51 @@
-<div class="flex justify-center items-center  p-6">
-  <div class="bg-white bg-opacity-30 p-6 rounded-lg shadow-md w-100 text-center">
-    <h2 class="text-xl font-semibold text-black mb-4">Add Workout</h2>
+<div class="flex justify-center items-center p-6">
+  <div class="bg-white bg-opacity-20 backdrop-blur-lg p-8 rounded-xl shadow-2xl w-full max-w-md text-center transform transition-all hover:scale-105">
+    <h2 class="text-2xl font-bold text-black mb-6">Add Workout</h2>
 
+    <!-- User Name Input -->
     <input
       type="text"
       [(ngModel)]="newUserName"
       placeholder="User Name"
-      class="w-full p-2 mb-3 bg-white bg-opacity-70 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      class="w-full p-3 mb-4 bg-white bg-opacity-80 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-500 text-gray-800 transition-all duration-200 hover:bg-opacity-90" />
 
-    <div class="relative mb-3">
+    <!-- Workout Type Dropdown -->
+    <div class="relative mb-4">
       <button
-        class="w-full p-2 bg-white bg-opacity-70 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex justify-between items-center"
+        class="w-full p-3 bg-white bg-opacity-80 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex justify-between items-center text-gray-800 hover:bg-opacity-90 transition-all duration-200"
         (click)="toggleDropdown()">
-        {{ newWorkoutType }}
-        <span class="text-lg">&#9660;</span>
+        {{ newWorkoutType || 'Select Workout Type' }}
+        <span class="text-lg transform transition-transform duration-200" [ngClass]="{ 'rotate-180': isDropdownOpen }">&#9660;</span>
       </button>
-      <div *ngIf="isDropdownOpen" class="absolute w-full bg-white bg-opacity-90 border border-gray-300 rounded-md mt-1 z-10 max-h-40 overflow-auto">
+      <div *ngIf="isDropdownOpen" class="absolute w-full bg-white bg-opacity-95 border border-gray-300 rounded-lg mt-2 z-10 max-h-40 overflow-auto shadow-lg">
         <input
           type="text"
           [(ngModel)]="searchTerm"
           (input)="filterWorkoutTypes()"
           placeholder="Search..."
-          class="w-full p-2 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          class="w-full p-2 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 border-b border-gray-200" />
         <ul>
-          <li *ngFor="let type of filteredWorkoutTypes" (click)="selectOption(type)" class="p-2 cursor-pointer hover:bg-indigo-500 hover:text-white">
+          <li
+            *ngFor="let type of filteredWorkoutTypes"
+            (click)="selectOption(type)"
+            class="p-2 cursor-pointer hover:bg-indigo-500 hover:text-white transition-all duration-200">
             {{ type }}
           </li>
         </ul>
       </div>
     </div>
 
+    <!-- Minutes Input -->
     <input
       type="number"
       [(ngModel)]="newWorkoutMinutes"
       placeholder="Minutes"
-      class="w-full p-2 mb-3 bg-white bg-opacity-70 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      class="w-full p-3 mb-4 bg-white bg-opacity-80 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-500 text-gray-800 transition-all duration-200 hover:bg-opacity-90" />
 
+    <!-- Add Workout Button -->
     <button
       (click)="addWorkout()"
-      class="w-full py-2 bg-gradient-to-r from-pink-500 to-indigo-600 text-white rounded-md hover:bg-gradient-to-l">
+      class="w-full py-3 bg-gradient-to-r from-pink-500 to-indigo-600 text-white rounded-lg font-semibold hover:bg-gradient-to-l hover:shadow-lg transition-all duration-300 transform hover:scale-105">
       Add Workout
     </button>
   </div>

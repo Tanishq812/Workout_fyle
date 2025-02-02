@@ -42,7 +42,6 @@ export class WorkoutAddComponent {
     };
 
     let existingUser = this.workoutService.getUsers().find(user => user.name === this.newUserName);
-
     if (existingUser) {
       existingUser.workouts.push(newWorkout);
       this.workoutService.updateUser(existingUser);
