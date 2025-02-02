@@ -1,4 +1,4 @@
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkoutComparisonComponent } from './workout-comparison.component';
 
@@ -21,4 +21,4 @@ describe('WorkoutComparisonComponent', () => {
     expect(component).toBeTruthy();
   });
 });
- */
+

@@ -1,4 +1,4 @@
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkoutListComponent } from './workout-list.component';
 
@@ -21,4 +21,4 @@ describe('WorkoutListComponent', () => {
     expect(component).toBeTruthy();
   });
 });
- */
+
